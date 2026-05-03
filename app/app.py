@@ -10,5 +10,11 @@ def home():
 def health():
     return {'status': 'healthy'}
 
+@app.route('/metrics')
+def metrics():
+    return {'total_files':  10,
+            'remediated' :   8,
+            'errors_found' : 2}
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
