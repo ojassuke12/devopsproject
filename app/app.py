@@ -1,4 +1,5 @@
 from flask import Flask
+import json
 
 app = Flask(__name__)
 
@@ -12,18 +13,17 @@ def health():
 
 @app.route('/metrics')
 def metrics():
-    return {'total_files':  10,
-            'remediated' :   8,
-            'errors_found' : 2}
+    with open('data.json') as f:
+     data = json.load(f)
+    return data
 
 @app.route('/predict')
 def predict():
-     total_files = 10
-     remediated = 8
-     days_elapsed = 30
+     with open('data.json') as f:
+       data = json.load(f)
     
-     files_remaining = total_files - remediated
-     daily_rate = remediated / days_elapsed
+     files_remaining = data['total_files'] - data['remediated']
+     daily_rate = data['remediated'] / data['days_elapsed']
      days_remaining = files_remaining / daily_rate
     
      if days_remaining <= 10:
