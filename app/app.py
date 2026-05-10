@@ -1,12 +1,17 @@
-from flask import Flask
+from flask import Flask,render_template
 import json
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return '<h1>Ojas DevOps Portfolio</h1><p>Built with Flask, Docker, and GitHub Actions</p>'
-
+    with open('data.json') as f:
+     data = json.load(f)
+    return render_template('dashboard.html', 
+     total_files=data['total_files'],
+     remediated=data['remediated'],
+     errors_found=data['errors_found'],
+     status='on track')
 @app.route('/health')
 def health():
     return {'status': 'healthy'}
