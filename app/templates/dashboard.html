@@ -1,13 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>project</title>
+    <title>Migration Health Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #60a5fa;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 8px;
+            color: #e2e8f0;
+        }
+
+        .status-card {
+            grid-column: span 2;
+            text-align: center;
+        }
+
+        .on-track { color: #4ade80; }
+        .at-risk { color: #f87171; }
+    </style>
 </head>
 <body>
-    <h1>Migration Health Dashboard</h1>
-    <p>Total Files: {{ total_files }}</p>
-    <p>Remediated: {{ remediated }}</p>
-    <p>Errors Found: {{ errors_found }}</p>
-    <p>Status: {{ status }}</p>
+    <div class="header">
+        <h1>Migration Health Dashboard</h1>
+        <p>ECC to S/4HANA Migration Tracker</p>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-label">Total Files</div>
+            <div class="card-value">{{ total_files }}</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Remediated</div>
+            <div class="card-value">{{ remediated }}</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Errors Found</div>
+            <div class="card-value">{{ errors_found }}</div>
+        </div>
+        <div class="card status-card">
+            <div class="card-label">Status</div>
+            <div class="card-value {{ status | replace(' ', '-') }}">{{ status }}</div>
+        </div>
+    </div>
 </body>
 </html>
