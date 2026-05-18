@@ -19,7 +19,8 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install flask pytest
+        pip install -r app/requirements.txt
+        pip install pytest
     
     - name: Test app starts
       run: |
