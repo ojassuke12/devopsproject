@@ -1,4 +1,5 @@
 from flask import Flask,render_template
+from ml_model import predict_completion
 import json
 
 app = Flask(__name__)
@@ -26,20 +27,12 @@ def metrics():
 def predict():
      with open('data.json') as f:
        data = json.load(f)
+
     
-     files_remaining = data['total_files'] - data['remediated']
-     daily_rate = data['remediated'] / data['days_elapsed']
-     days_remaining = files_remaining / daily_rate
     
-     if days_remaining <= 10:
-        status = "on track"
-     else:
-        status = "at risk"
+     return predict_completion(data['total_files'], data['remediated'], data['errors_found'])
+
     
-     return {
-        'days_remaining': round(days_remaining, 1),
-        'status': status
-    }
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
